@@ -10,7 +10,7 @@ vignette: >
 ---
 
 ## Introduction
-The shape of the dendritic arborization determines the synaptic connectivity pattern in the brain. However, some reconstructions that are obtained from stained neurons in single slices have dendritic arborizations that go past the limit of the single slice. Therefore, many of these reconstructions are incomplete, since they have cut endings. The neurons that present this drawback are not suitable for morphometric analysis. A repair algorithm presented in [@anwar2009] tackled this problem but it is based on the strong assumption of statistical symmetry about the morphologies of cortical neurons and uses a limited database of predefined subtrees to append them to the cut dendrites. The present package gets rid of previous assumptions by creating a repairing procedure based on a data-driven model from complete reconstructions.
+The shape of the dendritic arborization determines the synaptic connectivity pattern in the brain. However, some reconstructions that are obtained from stained neurons in single slices have dendritic arborizations that go past the limit of the single slice. Therefore, many of these reconstructions are incomplete, since they have cut endings. The neurons that present this drawback are not suitable for morphometric analysis. A repair algorithm presented in [Anwar et al. 2009](#references) tackled this problem but it is based on the strong assumption of statistical symmetry about the morphologies of cortical neurons and uses a limited database of predefined subtrees to append them to the cut dendrites. The present package gets rid of previous assumptions by creating a repairing procedure based on a data-driven model from complete reconstructions.
 
 To achieve this goal, the repairing problem has been decomposed in five modules that once are combined allows the user to repair incomplete basal dendrites. The included modules are:
 
@@ -77,7 +77,7 @@ The function `get_cut_nodes` has two parameters:
 |n_points_plane|Is an integer denoting the minimum number of points in a plane to be considered a cutting plane|
 
 ## Feature extractor
-Neurolucida format represents the neurons in which each dendritic segment is represented by its Cartesian position and diameter. Although it is an accurate representation of the dendritic morphology, it lacks of interpretability from a functional neuroscientific perspective. Additionally the Cartesian representation is not compact, a ton of lines are needed to define a neuron. Most commonly, neuroanatomical studies characterize neuronal dendrites according to statistical distributions from the raw data. Hence, the computational neuroanatomy approach consists of computing a set of measured "fundamental" parameters [@ascoli2001generation].
+Neurolucida format represents the neurons in which each dendritic segment is represented by its Cartesian position and diameter. Although it is an accurate representation of the dendritic morphology, it lacks of interpretability from a functional neuroscientific perspective. Additionally the Cartesian representation is not compact, a ton of lines are needed to define a neuron. Most commonly, neuroanatomical studies characterize neuronal dendrites according to statistical distributions from the raw data. Hence, the computational neuroanatomy approach consists of computing a set of measured "fundamental" parameters [Ascoli et .al 2001](#references).
 
 [NeuroSTR](https://lrodriguezlujan.github.io/neurostr/) provides a extend list of [measures](https://lrodriguezlujan.github.io/neurostr/doc/measures.html). These measures were integrated in this package and new ones were implemented. They are useful for the next two modules. To compute them for each node in the basal dendrites the next code should be run:
 
@@ -106,7 +106,7 @@ The function `node_feature_extractor` has seven parameters:
 |id_nodes|Is a vector of intergers where each value es the id of a node|
 
 ## Node classifier
-According to [@ascoli2001generation] there are two major types of computational algorithms to simulate dendrites, that is, "local" and "global" algorithms. Like [L-NEURON](http://krasnow1.gmu.edu/cn3/L-Neuron/index.htm), this package is based on the "local" approach. L-NEURON describes (and generates) dendritic trees as a recursive process corresponding to the growth of single branches that starts from a stem or bifurcation and ends in another bifurcation or terminal point. Thus, an incomplete dendrite can grow, bifurcate or end in a terminal point. L-NEURON uses a set of predefined rules to choose one of these possibilities. However, this package includes a Bayesian network classifier that given the previously computed measures for the cutting nodes it returns a probability for each possible output. Thus, the next action (grow, bifurcate or end) is choosen randomly according to the probabilities provided by the classifier.
+According to [Ascoli et .al 2001](#references) there are two major types of computational algorithms to simulate dendrites, that is, "local" and "global" algorithms. Like [L-NEURON](http://krasnow1.gmu.edu/cn3/L-Neuron/index.htm), this package is based on the "local" approach. L-NEURON describes (and generates) dendritic trees as a recursive process corresponding to the growth of single branches that starts from a stem or bifurcation and ends in another bifurcation or terminal point. Thus, an incomplete dendrite can grow, bifurcate or end in a terminal point. L-NEURON uses a set of predefined rules to choose one of these possibilities. However, this package includes a Bayesian network classifier that given the previously computed measures for the cutting nodes it returns a probability for each possible output. Thus, the next action (grow, bifurcate or end) is choosen randomly according to the probabilities provided by the classifier.
 
 To train a classifier the user has to give the path where the neurons that are going to be used to train the model are saved. The algorithm gets one by one the neurons, computes their features saves in *data* variable and uses them to train the model. 
 
@@ -226,3 +226,8 @@ write_2_JSON(neuron = neuron, file_path = file.path(temp_dir, "simplified.json")
 Remember that a reconstruction in JSON format can be visualize in the [Neuroviewer](https://lrodriguezlujan.github.io/neuroviewer/) webpage.
 
 ## References
+
+Anwar, Riachi, H., and H. Markram. 2009. “An Approach to Capturing Neuron Morphological Diversity.” In *Computational Modeling Methods for Neuroscientists*, 211–31. MIT.
+
+Ascoli, Giorgio A, Jeffrey L Krichmar, Slawomir J Nasuto, and Stephen L Senft. 2001. “Generation, Description and Storage of Dendritic Morphology Data”. *Philosophical Transactions of the Royal Society of London B: Biological Sciences* 356: 1131–45.
+
