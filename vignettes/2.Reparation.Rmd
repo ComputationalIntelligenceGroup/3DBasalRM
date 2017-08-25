@@ -1,0 +1,228 @@
+---
+title: "Basal dendrites reparation"
+author: "Sergio Luengo-Sanchez"
+output: rmarkdown::html_vignette
+bibliography: bibliography.bib
+vignette: >
+  %\VignetteIndexEntry{Basal dendrites reparation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+The shape of the dendritic arborization determines the synaptic connectivity pattern in the brain. However, some reconstructions that are obtained from stained neurons in single slices have dendritic arborizations that go past the limit of the single slice. Therefore, many of these reconstructions are incomplete, since they have cut endings. The neurons that present this drawback are not suitable for morphometric analysis. A repair algorithm presented in [@anwar2009] tackled this problem but it is based on the strong assumption of statistical symmetry about the morphologies of cortical neurons and uses a limited database of predefined subtrees to append them to the cut dendrites. The present package gets rid of previous assumptions by creating a repairing procedure based on a data-driven model from complete reconstructions.
+
+To achieve this goal, the repairing problem has been decomposed in five modules that once are combined allows the user to repair incomplete basal dendrites. The included modules are:
+
+* Input/Output neurons
+* Cut identifier
+* Feature extractor
+* Node classifier
+* Simulator
+  
+Next sections are dedicated to explain the functionalities of each module using cases of use. Users that are not interested in the details of the package and just want to use it can move to the last section [Basal dendrites reparation](#basal-dendrites-reparation). 
+
+## IO neurons
+Neuron reconstructions are usually obtained through neuron tracing softwares as Neurolucida. In many cases, functionalities provided by these softwares are insufficient to address neuroanatomic problems and as a consequence the traced neurons are exported to a file for future analysis. Thus, to handle the representations of dendritic arborizations the first step is to develop an input/output (IO) interface that allows to read and export neuron reconstructions. 
+
+The neuroanatomy toolbox [NeuroSTR](https://lrodriguezlujan.github.io/neurostr/) provides a collection of utilities to process three-dimensional neuron reconstructions in their most common file formats. For example, it includes an I/O interface that has been integrated with R in this package. Also it implements a [data model](https://lrodriguezlujan.github.io/neurostr/doc/data_model.html) that has been taken as reference for the development of the posterior modules. This interface can be use to read the same formats available in NeuroSTR (see them [here](https://lrodriguezlujan.github.io/neurostr/doc/io.html)). Next, it is shown an example of how to read a neuron reconstruction formatted as a DAT Neurolucida.
+
+```
+# Input a neuron reconstruction in the system. Replace file_path with the path of the desired reconstruction.
+file_path <- system.file("extdata", "h213III1.DAT", package = "neurostr")
+neuron <- neuro_converter(file_path = file_path, correct = F, eps = 60)
+```
+
+The function **neuro_converter** has three parameters: 
+
+|Parameter|Description|
+|--------|---------------------------------------------------------------------------------------|
+|file_path|Input reconstruction file (swc,dat,asc or json). File format is guessed from the file extension|
+|correct|Try to correct errors in the reconstruction. Warning: Sometimes can introduce undesired changes in the morphology|
+|eps|Error tolerance for the Ramer-Douglas-Peucker simplication algorithm applied at branch level|
+
+As result a list of two elements is returned. The first element (`neuron$plain` or `neuron[[1]]`) is the neuron represented as a plain text in JSON format and the second one (`neuron$data` or `neuron[[2]]`) is the neuron codified as a data.frame, a native data structure of R. This structure is going to be used to pass on the inputted neurons by the user between the rest of modules in this package.
+
+In those cases where the input neuron reconstruction has been modified, it can be useful to save the neuron for future research. The package allows to export a neuron to JSON format. An example can be found below:
+
+```
+# Output the reconstruction to a temporal directory and give it the name simplified.json. Replace temp_dir with the desired path where the file should be saved.
+temp_dir <- tempdir()
+write_2_JSON(neuron = neuron, file_path = file.path(temp_dir, "simplified.json")) 
+```
+
+The function `write_2_JSON` has two parameters:
+
+|Parameter|Description|
+|--------|---------------------------------------------------------------------------------------|
+|neuron|Is a list of two elements containing the plain and data.frame representations of a reconstruction|
+|file_path|Is the path where the file must be exported|
+
+As an additional note, exported neurons can be visualized with [NeuroViewer](https://lrodriguezlujan.github.io/neuroviewer/), a typescript library to render 3D reconstructions. It must be regarded that this tool only allows reconstructions in JSON format.
+
+## Cut identifier
+Once a neuron has been loaded in the system to be repair, the next step is to identify automatically those basal dendrites that were cut. The algorithm implemented for this purpose is built on the assumption that the slices are approximately planar and consequently the tips of cut dendrites must define roughly a 2D plane. Thus, this method search cutting planes and in those cases where several ending dendrite tips are in the same plane they are denoted as cutting points. Next it is given an example of how to get them:
+
+```
+# Get cutting points
+cutting_nodes_idx <- get_cut_nodes(neuron = neuron, n_points_plane = 5) 
+``` 
+The outcome is the vector of the id numbers corresponding to terminal nodes, given by the file previously read, of each cut dendrite.  
+
+The function `get_cut_nodes` has two parameters:
+
+|Parameter|Description|
+|--------|---------------------------------------------------------------------------------------|
+|neuron|Is a list of two elements containing the plain and data.frame representations of a reconstruction|
+|n_points_plane|Is an integer denoting the minimum number of points in a plane to be considered a cutting plane|
+
+## Feature extractor
+Neurolucida format represents the neurons in which each dendritic segment is represented by its Cartesian position and diameter. Although it is an accurate representation of the dendritic morphology, it lacks of interpretability from a functional neuroscientific perspective. Additionally the Cartesian representation is not compact, a ton of lines are needed to define a neuron. Most commonly, neuroanatomical studies characterize neuronal dendrites according to statistical distributions from the raw data. Hence, the computational neuroanatomy approach consists of computing a set of measured "fundamental" parameters [@ascoli2001generation].
+
+[NeuroSTR](https://lrodriguezlujan.github.io/neurostr/) provides a extend list of [measures](https://lrodriguezlujan.github.io/neurostr/doc/measures.html). These measures were integrated in this package and new ones were implemented. They are useful for the next two modules. To compute them for each node in the basal dendrites the next code should be run:
+
+```
+all_features <- rbindlist(node_feature_extractor(neuron = neuron, omit_apical = T, omit_axon = T, omit_dend = F, correct = F, removeZjumps = T))
+```
+
+It is also possible to compute the features for a set of nodes. To do that, the user should provide an array with the ids of the nodes to be measured. For example, to compute the measures of the cutting nodes run
+
+```
+cut_node_features <- rbindlist(node_feature_extractor(neuron, omit_apical = T, omit_axon = T, omit_dend = F, correct = F, removeZjumps = T, id_nodes = cutting_nodes_idx))
+```
+
+As result a data.frame is obtained where each column is a feature and each row is a node.
+
+The function `node_feature_extractor` has seven parameters:
+
+|Parameter|Description|
+|--------|---------------------------------------------------------------------------------------|
+|neuron|Is a list of two elements containing the plain and data.frame representations of a reconstruction|
+|omit_apical|A boolean value denoting if it should be computed the features for the apical dendrite|
+|omit_axon|A boolean value used as a flag to compute the features for the axon|
+|omit_dend|If set the features are not computed for the basal dendrites|
+|correct|The converter calls the correct method on each neuron in the reconstruction|
+|removeZjumps|Remove jumps over the Z axis that sometimes appears in dendrites due to the lack of resolution|
+|id_nodes|Is a vector of intergers where each value es the id of a node|
+
+## Node classifier
+According to [@ascoli2001generation] there are two major types of computational algorithms to simulate dendrites, that is, "local" and "global" algorithms. Like [L-NEURON](http://krasnow1.gmu.edu/cn3/L-Neuron/index.htm), this package is based on the "local" approach. L-NEURON describes (and generates) dendritic trees as a recursive process corresponding to the growth of single branches that starts from a stem or bifurcation and ends in another bifurcation or terminal point. Thus, an incomplete dendrite can grow, bifurcate or end in a terminal point. L-NEURON uses a set of predefined rules to choose one of these possibilities. However, this package includes a Bayesian network classifier that given the previously computed measures for the cutting nodes it returns a probability for each possible output. Thus, the next action (grow, bifurcate or end) is choosen randomly according to the probabilities provided by the classifier.
+
+To train a classifier the user has to give the path where the neurons that are going to be used to train the model are saved. The algorithm gets one by one the neurons, computes their features saves in *data* variable and uses them to train the model. 
+
+```
+# Generate dataset and train a new Bayesian network classifier
+data <- get_features_files(path, eps=60)
+desc_model <- train_num_descendant_model(data)
+```
+
+To test the rest of functionalities of the package and continue with the tutorial the user can load a precomputed model just introducing the next sentence in the R console:
+
+```
+# Load a pre-computed model
+desc_model <- neurostr::desc_model
+```
+
+Given a Bayesian network classifier, the next code applies the classifier trained with complete basal arborization data to label the tips of the cut dendrites as continuation, bifurcation or terminal.
+
+```
+# Filter the features from the data.frame so the features in the model and in the input dataset are the same 
+num_desc_features <- cut_node_features[ ,colnames(cut_node_features) %in% names(desc_model$params), with=F]
+num_desc_features$node_order[num_desc_features$node_order > 4] <- 4
+num_desc_features$node_order <- factor(num_desc_features$node_order, levels=0:4)
+
+# Select one action (grow, bifurcate or end) according to the probabilities obtained from the Bayesian network classifier
+desc_probabilities <- pred_BN(BN = desc_model, pred_data = num_desc_features)
+num_of_descendant <- apply(desc_probabilities[, grep("prob", colnames(desc_probabilities))], 1, function(x) {sample(c(0, 1, 2), size=1, prob=x)})
+```
+## Simulator
+Simulation in this scope is an iterative process that grows the cut dendrites adding new nodes to the terminal tips. The simulation can be divided in two steps, classify tips of cut dendrites according to the node classifier (see section [Node classifier](#node-classifier)) and simulate new nodes to be added to the tips. The algorithm ends when all the tips are classified as terminals.
+
+The first step of the iterative procedure assigns a label to each tip of the cut dendrites. The simulator proceeds in a different way depending of the value of that label. When a node is denoted as terminal it means that its reparation has concluded and consequently it is not needed to simulate more. The tips of the dendrites classified as continuation or bifurcation grow according to their own probabilistic model. Concretely, the continuation model generates a new stem from the tip of the dendrite meanwhile the bifurcation model generate two new branches. The new nodes must be classified in the next iteration to recognize if the algorithm have ended or simulation go on.
+
+To achieve a deeper insight into how the algorithm works an example of the code needed for one iteration of the algorithm is given next:
+
+1. Compute the simulation models with your own neurons or load the preloaded model
+
+```
+#Compute the continuation and bifurcation models given the path to the folder where all the reconstruction files needed to generate the model are saved 
+data <- get_features_files(path, eps=60)
+simulation_model <- compute_simulation_models(data)
+```
+OR
+
+```
+# Load a precomputed simulation model and initialize the maximum id of the nodes
+simulation_model <- neurostr::simulation_model
+max_id_node <- 0 #If it is 0, it is search the maximum value in future steps
+```
+
+2. Filter the features from the data.frame so the features in the simulation models and in the input dataset are the same 
+
+``` 
+simulation_data <- cut_node_features[, colnames(cut_node_features) %in% names(simulation_model$continue$structure$nodes), with=F]
+simulation_data$node_order[simulation_data$node_order > 4] <- 4
+simulation_data$node_order <- factor(simulation_data$node_order, levels=0:4)
+```
+
+3. Simulate continuation nodes
+
+```
+#Simulate new nodes from the continuation model
+continue_data <- simulation_data[num_of_descendant==1]
+simulation_continue <- simulate_continuation(simulation_model$continue,continue_data)
+
+#Give the ids of the parent nodes to join them with a stem
+simulation_continue$id_parent <- cutting_nodes_idx[num_of_descendant==1]
+simulated_data <- simulation_continue
+```
+
+4. Simulate bifurcation nodes
+
+```
+#Simulate new nodes from the bifurcation model
+bifurcation_data <- simulation_data[num_of_descendant==2]
+simulation_bifurcation <- simulate_bifurcation(simulation_model$bifurcation,bifurcation_data)
+
+#Give the names to the variables and the id of the parent node
+second_branch_idx <- grep("2", colnames(simulation_bifurcation))
+simulation_bifurcation_2 <- simulation_bifurcation[,second_branch_idx]
+colnames(simulation_bifurcation_2) <- gsub("2", "", colnames(simulation_bifurcation_2))
+simulation_bifurcation <- rbind(simulation_bifurcation[, setdiff(1:ncol(simulation_bifurcation), second_branch_idx)], simulation_bifurcation_2)
+simulation_bifurcation$id_parent <- rep(cutting_nodes_idx[num_of_descendant==2], 2)
+```
+
+5. Add the new nodes at the end of the cut dendrites
+
+```
+#Join the new nodes generated by the continuation and bifurcation models
+simulated_data <- rbind(simulation_continue, simulation_bifurcation)
+
+#Recover original values of the length (it has been modeled as a log-norm)
+simulated_data$desc_length <- exp(simulated_data$desc_length)
+is_bifurcation <- c(rep(1, nrow(simulation_data[num_of_descendant==1])), rep(2, nrow(simulation_data[num_of_descendant==2]) * 2)) - 1
+
+#Add new nodes to the cut dendrites
+neuron <- simulated_node_coordinates(neuron$plain, data.matrix(simulated_data), is_bifurcation, max_id_node)
+```
+## Basal dendrites reparation
+All the modules described in the [Introduction](#introduction) section are coupled in a function that allows the user to repair a neuron using the predefined models. The user just have to introduce the path of a reconstruction file in any of the formats accepted by [NeuroSTR](https://lrodriguezlujan.github.io/neurostr/) and a seed to obtain reproducible results. As result a neuron in JSON format is returned. The code to achieve that is the next:
+
+```
+# Introduce the path of the reconstruction file, in this case it is given an example included in the package
+file_path <- system.file("extdata", "h213III1.DAT", package = "neurostr")
+
+# Get the repaired neuron in JSON format
+repaired_neuron <- main(file_path = file_path, seed = 1)
+```
+
+The repaired basal arborization can be exported as a JSON file following the steps described previously in the [IO neurons](#io-neurons) section. 
+
+```
+# Export the repaired neuron to a temporal directory and give it the name simplified.json. Replace temp_dir with the desired path where the file should be saved.
+temp_dir <- tempdir()
+write_2_JSON(neuron = neuron, file_path = file.path(temp_dir, "simplified.json")) 
+```
+Remember that a reconstruction in JSON format can be visualize in the [Neuroviewer](https://lrodriguezlujan.github.io/neuroviewer/) webpage.
+
+## References

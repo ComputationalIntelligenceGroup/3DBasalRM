@@ -1,0 +1,77 @@
+---
+title: "Setup"
+author: "Sergio Luengo-Sanchez"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Setup}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Requisites and dependencies
+The package uses some of the C++ 14 standard features, so it needs a compiler with C++ 14 support.
+
+|Compiler|Version|Tested|
+|--------|-------|------|
+|     g++|     >5| 5.4.1|
+
+Also Rstudio IDE is needed to compile the source files.
+|IDE|Version|Tested|
+|--------|-------|------|
+| Rstudio|   >0.9| 1.0.136|
+
+The package also uses the following dependencies. Some of them are bundled:
+
+|Library|Version|License|Bundled|
+|-------|-------|-------|-------|
+|  Boost|>1.62.0|  BSL-1|     No|
+| Eigen3|    3.X|  MPL-2|     No|
+|neurostr| 0.0.1| GPL2/3|     No|
+| tree.h|    3.1| GPL2/3|    Yes|
+|rapidJSON|1.1.0|    MIT|    Yes|
+| spdlog| 0.11.0|    MIT|    Yes|
+| base-n|   1.61|    MIT|    Yes|
+
+To install **Boost** follow the next steps
+
+  1. Download Boost from its [website](http://boost.org)
+  2. In the directory where you want put the Boost installation uncompressing the downloaded file
+  3. Run the following commands in the shell 
+    1. `./bootstrap.sh --prefix=/usr --with-libraries=all`
+    2. `./b2`
+    2. `sudo ./b2 install`
+    
+To install **Eigen3** follow the next steps
+  
+  1. Run sudo apt install libeigen3-dev
+  
+  OR
+  
+  1. Download Eigen3 from its [website](http://eigen.tuxfamily.org)
+  2. In the directory where you want put the Eigen3 installation uncompressing the downloaded file
+  3. Make a directory named *build* inside the installation folder
+  4. Run `cmake ../` from the shell in the recently created folder *build*
+  5. Run `sudo make install` from the shell
+  6. Edit the Makevars of the R project to include the path of the headers files
+
+Some R packages are needed to perform some specific tasks releated with 3D processing, data management, or modeling. They must be installed thorugh the command `install.packages("name_of_the_package")` to use this package. The R dependencies of the package are:
+
+|Library|Version|License|
+|-------|-------|-------|
+|   Rcpp| 0.12.9| GPL2/3|
+|  rjson| 0.2.15|   GPL2|
+|   Rvcg| 0.0.15| GPL2/3|
+|geometry| 0.3.6|   GPL3|
+|Morpho |2.4.1.1|   GPL2|
+|data.table|1.10.0| GPL3|
+| dbscan|  1.0.0|   GPL3|
+|bnlearn|    4.0| GPL2/3|
+|    msm|  1.6.4| GPL2/3|
+|  Hmisc|  4.0.3| GPL2/3|
+| mclust|  5.2.3| GPL2/3|
+
+Updated versions of the R dependencies packages should be supported.
+
+Finally, download the file [strneuron](http://cig.fi.upm.es/sites/default/files/software/strneuron/strneuron.tar.gz) and uncompress. It contains the library and the headers of the neurostr toolbox. It only have been tested under Ubuntu 16.04 and 64 bits. The file *Makevars* in the project must be edited indicating the path of **strneuron** folder. *Makevars* can be found inside the *src* folder.
+
+To compile the project, open **neurostr.Rproj**. When Rstudio is open press Cntrl+Shift+C to compile the project.

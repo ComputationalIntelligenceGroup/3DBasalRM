@@ -1,0 +1,3 @@
+useDynLib(neurostr)
+exportPattern("^[[:alpha:]]+")
+import(methods, Rcpp)

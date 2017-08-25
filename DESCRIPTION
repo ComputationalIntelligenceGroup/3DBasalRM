@@ -1,0 +1,17 @@
+Package: neurostr
+Type: Package
+Title: Incomplete basal arborization reconstruction
+Version: 1.0
+Date: 2017-01-16
+Author: Sergio Luengo-Sanchez
+Maintainer: Sergio Luengo-Sanchez <sluengo@fi.upm.es>
+Description: A neuroanatomy toolbox for R. It reads and processes three-dimensional neuron reconstructions in the most common file formats and offers a huge set of functions and utilities to work with them. The package is developed to address incomplete basal arborization reconstruction from a Bayesian network.
+License: GPL (>= 2)
+Imports: methods, Rcpp (>= 0.12.9), rjson, Rvcg, geometry, Morpho, data.table, dbscan, bnlearn, msm, Hmisc, mclust
+Depends: Rcpp, rjson, Rvcg, geometry, Morpho, data.table, dbscan, bnlearn, msm, Hmisc, mclust
+LinkingTo: Rcpp
+LazyData: true
+RoxygenNote: 6.0.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr

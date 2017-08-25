@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Sergio Luengo-Sanchez" />
+
+
+<title>Basal dendrites reparation</title>
+
+
+
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Basal dendrites reparation</h1>
+<h4 class="author"><em>Sergio Luengo-Sanchez</em></h4>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The shape of the dendritic arborization determines the synaptic connectivity pattern in the brain. However, some reconstructions that are obtained from stained neurons in single slices have dendritic arborizations that go past the limit of the single slice. Therefore, many of these reconstructions are incomplete, since they have cut endings. The neurons that present this drawback are not suitable for morphometric analysis. A repair algorithm presented in <span class="citation">(Anwar and Markram 2009)</span> tackled this problem but it is based on the strong assumption of statistical symmetry about the morphologies of cortical neurons and uses a limited database of predefined subtrees to append them to the cut dendrites. The present package gets rid of previous assumptions by creating a repairing procedure based on a data-driven model from complete reconstructions.</p>
+<p>To achieve this goal, the repairing problem has been decomposed in five modules that once are combined allows the user to repair incomplete basal dendrites. The included modules are:</p>
+<ul>
+<li>Input/Output neurons</li>
+<li>Cut identifier</li>
+<li>Feature extractor</li>
+<li>Node classifier</li>
+<li>Simulator</li>
+</ul>
+<p>Next sections are dedicated to explain the functionalities of each module using cases of use. Users that are not interested in the details of the package and just want to use it can move to the last section <a href="#basal-dendrites-reparation">Basal dendrites reparation</a>.</p>
+</div>
+<div id="io-neurons" class="section level2">
+<h2>IO neurons</h2>
+<p>Neuron reconstructions are usually obtained through neuron tracing softwares as Neurolucida. In many cases, functionalities provided by these softwares are insufficient to address neuroanatomic problems and as a consequence the traced neurons are exported to a file for future analysis. Thus, to handle the representations of dendritic arborizations the first step is to develop an input/output (IO) interface that allows to read and export neuron reconstructions.</p>
+<p>The neuroanatomy toolbox <a href="https://lrodriguezlujan.github.io/neurostr/">NeuroSTR</a> provides a collection of utilities to process three-dimensional neuron reconstructions in their most common file formats. For example, it includes an I/O interface that has been integrated with R in this package. Also it implements a <a href="https://lrodriguezlujan.github.io/neurostr/doc/data_model.html">data model</a> that has been taken as reference for the development of the posterior modules. This interface can be use to read the same formats available in NeuroSTR (see them <a href="https://lrodriguezlujan.github.io/neurostr/doc/io.html">here</a>). Next, it is shown an example of how to read a neuron reconstruction formatted as a DAT Neurolucida.</p>
+<pre><code># Input a neuron reconstruction in the system. Replace file_path with the path of the desired reconstruction.
+file_path &lt;- system.file(&quot;extdata&quot;, &quot;h213III1.DAT&quot;, package = &quot;neurostr&quot;)
+neuron &lt;- neuro_converter(file_path = file_path, correct = F, eps = 60)</code></pre>
+<p>The function <strong>neuro_converter</strong> has three parameters:</p>
+<table>
+<colgroup>
+<col width="9%"></col>
+<col width="90%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>file_path</td>
+<td>Input reconstruction file (swc,dat,asc or json). File format is guessed from the file extension</td>
+</tr>
+<tr class="even">
+<td>correct</td>
+<td>Try to correct errors in the reconstruction. Warning: Sometimes can introduce undesired changes in the morphology</td>
+</tr>
+<tr class="odd">
+<td>eps</td>
+<td>Error tolerance for the Ramer-Douglas-Peucker simplication algorithm applied at branch level</td>
+</tr>
+</tbody>
+</table>
+<p>As result a list of two elements is returned. The first element (<code>neuron$plain</code> or <code>neuron[[1]]</code>) is the neuron represented as a plain text in JSON format and the second one (<code>neuron$data</code> or <code>neuron[[2]]</code>) is the neuron codified as a data.frame, a native data structure of R. This structure is going to be used to pass on the inputted neurons by the user between the rest of modules in this package.</p>
+<p>In those cases where the input neuron reconstruction has been modified, it can be useful to save the neuron for future research. The package allows to export a neuron to JSON format. An example can be found below:</p>
+<pre><code># Output the reconstruction to a temporal directory and give it the name simplified.json. Replace temp_dir with the desired path where the file should be saved.
+temp_dir &lt;- tempdir()
+write_2_JSON(neuron = neuron, file_path = file.path(temp_dir, &quot;simplified.json&quot;)) </code></pre>
+<p>The function <code>write_2_JSON</code> has two parameters:</p>
+<table>
+<colgroup>
+<col width="9%"></col>
+<col width="90%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>neuron</td>
+<td>Is a list of two elements containing the plain and data.frame representations of a reconstruction</td>
+</tr>
+<tr class="even">
+<td>file_path</td>
+<td>Is the path where the file must be exported</td>
+</tr>
+</tbody>
+</table>
+<p>As an additional note, exported neurons can be visualized with <a href="https://lrodriguezlujan.github.io/neuroviewer/">NeuroViewer</a>, a typescript library to render 3D reconstructions. It must be regarded that this tool only allows reconstructions in JSON format.</p>
+</div>
+<div id="cut-identifier" class="section level2">
+<h2>Cut identifier</h2>
+<p>Once a neuron has been loaded in the system to be repair, the next step is to identify automatically those basal dendrites that were cut. The algorithm implemented for this purpose is built on the assumption that the slices are approximately planar and consequently the tips of cut dendrites must define roughly a 2D plane. Thus, this method search cutting planes and in those cases where several ending dendrite tips are in the same plane they are denoted as cutting points. Next it is given an example of how to get them:</p>
+<pre><code># Get cutting points
+cutting_nodes_idx &lt;- get_cut_nodes(neuron = neuron, n_points_plane = 5) </code></pre>
+<p>The outcome is the vector of the id numbers corresponding to terminal nodes, given by the file previously read, of each cut dendrite.</p>
+<p>The function <code>get_cut_nodes</code> has two parameters:</p>
+<table>
+<colgroup>
+<col width="9%"></col>
+<col width="90%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>neuron</td>
+<td>Is a list of two elements containing the plain and data.frame representations of a reconstruction</td>
+</tr>
+<tr class="even">
+<td>n_points_plane</td>
+<td>Is an integer denoting the minimum number of points in a plane to be considered a cutting plane</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="feature-extractor" class="section level2">
+<h2>Feature extractor</h2>
+<p>Neurolucida format represents the neurons in which each dendritic segment is represented by its Cartesian position and diameter. Although it is an accurate representation of the dendritic morphology, it lacks of interpretability from a functional neuroscientific perspective. Additionally the Cartesian representation is not compact, a ton of lines are needed to define a neuron. Most commonly, neuroanatomical studies characterize neuronal dendrites according to statistical distributions from the raw data. Hence, the computational neuroanatomy approach consists of computing a set of measured “fundamental” parameters <span class="citation">(Ascoli et al. 2001)</span>.</p>
+<p><a href="https://lrodriguezlujan.github.io/neurostr/">NeuroSTR</a> provides a extend list of <a href="https://lrodriguezlujan.github.io/neurostr/doc/measures.html">measures</a>. These measures were integrated in this package and new ones were implemented. They are useful for the next two modules. To compute them for each node in the basal dendrites the next code should be run:</p>
+<pre><code>all_features &lt;- rbindlist(node_feature_extractor(neuron = neuron, omit_apical = T, omit_axon = T, omit_dend = F, correct = F, removeZjumps = T))</code></pre>
+<p>It is also possible to compute the features for a set of nodes. To do that, the user should provide an array with the ids of the nodes to be measured. For example, to compute the measures of the cutting nodes run</p>
+<pre><code>cut_node_features &lt;- rbindlist(node_feature_extractor(neuron, omit_apical = T, omit_axon = T, omit_dend = F, correct = F, removeZjumps = T, id_nodes = cutting_nodes_idx))</code></pre>
+<p>As result a data.frame is obtained where each column is a feature and each row is a node.</p>
+<p>The function <code>node_feature_extractor</code> has seven parameters:</p>
+<table>
+<colgroup>
+<col width="9%"></col>
+<col width="90%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>neuron</td>
+<td>Is a list of two elements containing the plain and data.frame representations of a reconstruction</td>
+</tr>
+<tr class="even">
+<td>omit_apical</td>
+<td>A boolean value denoting if it should be computed the features for the apical dendrite</td>
+</tr>
+<tr class="odd">
+<td>omit_axon</td>
+<td>A boolean value used as a flag to compute the features for the axon</td>
+</tr>
+<tr class="even">
+<td>omit_dend</td>
+<td>If set the features are not computed for the basal dendrites</td>
+</tr>
+<tr class="odd">
+<td>correct</td>
+<td>The converter calls the correct method on each neuron in the reconstruction</td>
+</tr>
+<tr class="even">
+<td>removeZjumps</td>
+<td>Remove jumps over the Z axis that sometimes appears in dendrites due to the lack of resolution</td>
+</tr>
+<tr class="odd">
+<td>id_nodes</td>
+<td>Is a vector of intergers where each value es the id of a node</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="node-classifier" class="section level2">
+<h2>Node classifier</h2>
+<p>According to <span class="citation">(Ascoli et al. 2001)</span> there are two major types of computational algorithms to simulate dendrites, that is, “local” and “global” algorithms. Like <a href="http://krasnow1.gmu.edu/cn3/L-Neuron/index.htm">L-NEURON</a>, this package is based on the “local” approach. L-NEURON describes (and generates) dendritic trees as a recursive process corresponding to the growth of single branches that starts from a stem or bifurcation and ends in another bifurcation or terminal point. Thus, an incomplete dendrite can grow, bifurcate or end in a terminal point. L-NEURON uses a set of predefined rules to choose one of these possibilities. However, this package includes a Bayesian network classifier that given the previously computed measures for the cutting nodes it returns a probability for each possible output. Thus, the next action (grow, bifurcate or end) is choosen randomly according to the probabilities provided by the classifier.</p>
+<p>To train a classifier the user has to give the path where the neurons that are going to be used to train the model are saved. The algorithm gets one by one the neurons, computes their features saves in <em>data</em> variable and uses them to train the model.</p>
+<pre><code># Generate dataset and train a new Bayesian network classifier
+data &lt;- get_features_files(path, eps=60)
+desc_model &lt;- train_num_descendant_model(data)</code></pre>
+<p>To test the rest of functionalities of the package and continue with the tutorial the user can load a precomputed model just introducing the next sentence in the R console:</p>
+<pre><code># Load a pre-computed model
+desc_model &lt;- neurostr::desc_model</code></pre>
+<p>Given a Bayesian network classifier, the next code applies the classifier trained with complete basal arborization data to label the tips of the cut dendrites as continuation, bifurcation or terminal.</p>
+<pre><code># Filter the features from the data.frame so the features in the model and in the input dataset are the same 
+num_desc_features &lt;- cut_node_features[ ,colnames(cut_node_features) %in% names(desc_model$params), with=F]
+num_desc_features$node_order[num_desc_features$node_order &gt; 4] &lt;- 4
+num_desc_features$node_order &lt;- factor(num_desc_features$node_order, levels=0:4)
+
+# Select one action (grow, bifurcate or end) according to the probabilities obtained from the Bayesian network classifier
+desc_probabilities &lt;- pred_BN(BN = desc_model, pred_data = num_desc_features)
+num_of_descendant &lt;- apply(desc_probabilities[, grep(&quot;prob&quot;, colnames(desc_probabilities))], 1, function(x) {sample(c(0, 1, 2), size=1, prob=x)})</code></pre>
+</div>
+<div id="simulator" class="section level2">
+<h2>Simulator</h2>
+<p>Simulation in this scope is an iterative process that grows the cut dendrites adding new nodes to the terminal tips. The simulation can be divided in two steps, classify tips of cut dendrites according to the node classifier (see section <a href="#node-classifier">Node classifier</a>) and simulate new nodes to be added to the tips. The algorithm ends when all the tips are classified as terminals.</p>
+<p>The first step of the iterative procedure assigns a label to each tip of the cut dendrites. The simulator proceeds in a different way depending of the value of that label. When a node is denoted as terminal it means that its reparation has concluded and consequently it is not needed to simulate more. The tips of the dendrites classified as continuation or bifurcation grow according to their own probabilistic model. Concretely, the continuation model generates a new stem from the tip of the dendrite meanwhile the bifurcation model generate two new branches. The new nodes must be classified in the next iteration to recognize if the algorithm have ended or simulation go on.</p>
+<p>To achieve a deeper insight into how the algorithm works an example of the code needed for one iteration of the algorithm is given next:</p>
+<ol style="list-style-type: decimal">
+<li>Compute the simulation models with your own neurons or load the preloaded model</li>
+</ol>
+<pre><code>#Compute the continuation and bifurcation models given the path to the folder where all the reconstruction files needed to generate the model are saved 
+data &lt;- get_features_files(path, eps=60)
+simulation_model &lt;- compute_simulation_models(data)</code></pre>
+<p>OR</p>
+<pre><code># Load a precomputed simulation model and initialize the maximum id of the nodes
+simulation_model &lt;- neurostr::simulation_model
+max_id_node &lt;- 0 #If it is 0, it is search the maximum value in future steps</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Filter the features from the data.frame so the features in the simulation models and in the input dataset are the same</li>
+</ol>
+<pre><code>simulation_data &lt;- cut_node_features[, colnames(cut_node_features) %in% names(simulation_model$continue$structure$nodes), with=F]
+simulation_data$node_order[simulation_data$node_order &gt; 4] &lt;- 4
+simulation_data$node_order &lt;- factor(simulation_data$node_order, levels=0:4)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Simulate continuation nodes</li>
+</ol>
+<pre><code>#Simulate new nodes from the continuation model
+continue_data &lt;- simulation_data[num_of_descendant==1]
+simulation_continue &lt;- simulate_continuation(simulation_model$continue,continue_data)
+
+#Give the ids of the parent nodes to join them with a stem
+simulation_continue$id_parent &lt;- cutting_nodes_idx[num_of_descendant==1]
+simulated_data &lt;- simulation_continue</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Simulate bifurcation nodes</li>
+</ol>
+<pre><code>#Simulate new nodes from the bifurcation model
+bifurcation_data &lt;- simulation_data[num_of_descendant==2]
+simulation_bifurcation &lt;- simulate_bifurcation(simulation_model$bifurcation,bifurcation_data)
+
+#Give the names to the variables and the id of the parent node
+second_branch_idx &lt;- grep(&quot;2&quot;, colnames(simulation_bifurcation))
+simulation_bifurcation_2 &lt;- simulation_bifurcation[,second_branch_idx]
+colnames(simulation_bifurcation_2) &lt;- gsub(&quot;2&quot;, &quot;&quot;, colnames(simulation_bifurcation_2))
+simulation_bifurcation &lt;- rbind(simulation_bifurcation[, setdiff(1:ncol(simulation_bifurcation), second_branch_idx)], simulation_bifurcation_2)
+simulation_bifurcation$id_parent &lt;- rep(cutting_nodes_idx[num_of_descendant==2], 2)</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Add the new nodes at the end of the cut dendrites</li>
+</ol>
+<pre><code>#Join the new nodes generated by the continuation and bifurcation models
+simulated_data &lt;- rbind(simulation_continue, simulation_bifurcation)
+
+#Recover original values of the length (it has been modeled as a log-norm)
+simulated_data$desc_length &lt;- exp(simulated_data$desc_length)
+is_bifurcation &lt;- c(rep(1, nrow(simulation_data[num_of_descendant==1])), rep(2, nrow(simulation_data[num_of_descendant==2]) * 2)) - 1
+
+#Add new nodes to the cut dendrites
+neuron &lt;- simulated_node_coordinates(neuron$plain, data.matrix(simulated_data), is_bifurcation, max_id_node)</code></pre>
+</div>
+<div id="basal-dendrites-reparation" class="section level2">
+<h2>Basal dendrites reparation</h2>
+<p>All the modules described in the <a href="#introduction">Introduction</a> section are coupled in a function that allows the user to repair a neuron using the predefined models. The user just have to introduce the path of a reconstruction file in any of the formats accepted by <a href="https://lrodriguezlujan.github.io/neurostr/">NeuroSTR</a> and a seed to obtain reproducible results. As result a neuron in JSON format is returned. The code to achieve that is the next:</p>
+<pre><code># Introduce the path of the reconstruction file, in this case it is given an example included in the package
+file_path &lt;- system.file(&quot;extdata&quot;, &quot;h213III1.DAT&quot;, package = &quot;neurostr&quot;)
+
+# Get the repaired neuron in JSON format
+repaired_neuron &lt;- main(file_path = file_path, seed = 1)</code></pre>
+<p>The repaired basal arborization can be exported as a JSON file following the steps described previously in the <a href="#io-neurons">IO neurons</a> section.</p>
+<pre><code># Export the repaired neuron to a temporal directory and give it the name simplified.json. Replace temp_dir with the desired path where the file should be saved.
+temp_dir &lt;- tempdir()
+write_2_JSON(neuron = neuron, file_path = file.path(temp_dir, &quot;simplified.json&quot;)) </code></pre>
+<p>Remember that a reconstruction in JSON format can be visualize in the <a href="https://lrodriguezlujan.github.io/neuroviewer/">Neuroviewer</a> webpage.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-anwar2009">
+<p>Anwar, Riachi, H., and H. Markram. 2009. “An Approach to Capturing Neuron Morphological Diversity.” In <em>Computational Modeling Methods for Neuroscientists</em>, 211–31. MIT.</p>
+</div>
+<div id="ref-ascoli2001generation">
+<p>Ascoli, Giorgio A, Jeffrey L Krichmar, Slawomir J Nasuto, and Stephen L Senft. 2001. “Generation, Description and Storage of Dendritic Morphology Data.” <em>Philosophical Transactions of the Royal Society of London B: Biological Sciences</em> 356: 1131–45.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
