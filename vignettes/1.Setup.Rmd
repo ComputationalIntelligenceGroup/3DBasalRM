@@ -74,4 +74,4 @@ Updated versions of the R dependencies packages should be supported.
 
 Finally, download the file [strneuron](http://cig.fi.upm.es/sites/default/files/software/strneuron/strneuron.tar.gz) and uncompress. It contains the library and the headers of the neurostr toolbox. It only have been tested under Ubuntu 16.04 and 64 bits. The file *Makevars* in the project must be edited indicating the path of **strneuron** folder. *Makevars* can be found inside the *src* folder.
 
-To compile the project, open **neurostr.Rproj**. When Rstudio is open press Cntrl+Shift+C to compile the project.
+To compile the project, open **neurostr.Rproj**. When Rstudio is open press Cntrl+Shift+B to compile the project.
